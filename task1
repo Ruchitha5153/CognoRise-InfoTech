@@ -1,0 +1,20 @@
+https://github.com/Ruchitha5153/CognoRise-InfoTech.git
+import pandas as pd
+
+# Read the dataset
+df = pd.read_csv('unemployment_data.csv')
+
+# Handle missing values
+df.fillna(method='ffill', inplace=True)  # Forward-fill missing values
+
+# Detect and handle outliers (e.g., using Z-score)
+z_scores = (df['unemployment_rate'] - df['unemployment_rate'].mean()) / df['unemployment_rate'].std()
+df = df[z_scores.abs() < 3]  # Remove outliers with Z-score > 3
+
+# Convert categorical variables to numerical (e.g., one-hot encoding)
+df = pd.get_dummies(df, columns=['region'])
+
+# Print the cleaned dataset
+print(df.head())
+
+
